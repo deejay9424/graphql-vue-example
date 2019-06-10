@@ -2,7 +2,8 @@ const express = require('express')
 const { graphql, buildSchema } = require('graphql')
 const graphqlHTTP = require('express-graphql')
 const cors = require('cors')
-const Champion = require('./champion')
+
+const Champion = require('./models/champion').Champion;
 
 const schema = buildSchema(`
   type Query {
@@ -21,22 +22,24 @@ const schema = buildSchema(`
   }
 `)
 
-const champions = [
-  new Champion('Ashe', 100),
-  new Champion('Vayne', 200)
-]
+// const champions = [
+//   new Champion('Ashe', 100),
+//   new Champion('Vayne', 200)
+// ]
 
 const rootValue = {
   language: () => 'NoSql',
 
-  getChampions: () => champions,
+  getChampions: () => Champion.find({},(err,data)=>{
+    return data;
+  }),
 
   getChampionByName: ({ name }) => {
-    return champions.find(x => x.name === name)
+    return Champion.find(x => x.name === name)
   },
 
-  updateAttackDamage: ({ name, attackDamage}) => {
-    const champion = champions.find(x => x.name === name)
+  updateAttackDamage: ({ name, attackDamage }) => {
+    const champion = Champion.find(x => x.name === name)
     champion.attackDamage = attackDamage
 
     return champion
