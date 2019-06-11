@@ -71,7 +71,7 @@ export default {
   methods: {
     async getTest() {
       try {
-        const res = await axios.post("https://stark-springs-39760.herokuapp.com/", {
+        const res = await axios.post("https://stark-springs-39760.herokuapp.com/graphql", {
           query: "{ get }"
         });
         this.example1 = res.data.data.get;
@@ -80,7 +80,7 @@ export default {
       }
     },
     async updateUserAge() {
-      const res = await axios.post("https://stark-springs-39760.herokuapp.com/", {
+      const res = await axios.post("https://stark-springs-39760.herokuapp.com/graphql", {
         query: ` 
         mutation UpdateUserAge($name: String!, $age: Int!) {
           updateUserAge(name: $name, age: $age) { 
@@ -102,7 +102,7 @@ export default {
     },
 
     async getUserByName() {
-      const res = await axios.post("https://stark-springs-39760.herokuapp.com/", {
+      const res = await axios.post("https://stark-springs-39760.herokuapp.com/graphql", {
         query: ` 
         query getUserByName($name:String!){
           getUserByName(name:$name){
@@ -118,7 +118,7 @@ export default {
     },
 
     async getUsers() {
-      const res = await axios.post("https://stark-springs-39760.herokuapp.com/", {
+      const res = await axios.post("https://stark-springs-39760.herokuapp.com/graphql", {
         query: `{ 
           getUsers { 
             name 
@@ -129,7 +129,7 @@ export default {
     },
 
     async newUser() {
-      const res = await axios.post("https://stark-springs-39760.herokuapp.com/", {
+      const res = await axios.post("https://stark-springs-39760.herokuapp.com/graphql", {
         query: ` 
         mutation insertUser($new_name:String!,$new_age:Int!) { 
 	            insertUser(name:$new_name,age:$new_age){
