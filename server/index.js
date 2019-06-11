@@ -3,6 +3,8 @@ const { graphql, buildSchema } = require('graphql')
 const graphqlHTTP = require('express-graphql')
 const cors = require('cors')
 const rootValue = require('./controllers/users');
+const path = require('path');
+const serveStatic = require('serve-static');
 
 const schema = buildSchema(`
   type Query {
@@ -25,8 +27,10 @@ const schema = buildSchema(`
 const app = express()
 app.use(cors())
 
-app.use('/graphql', graphqlHTTP({                 //Endpoint
+app.use('/graphql', graphqlHTTP({
   rootValue, schema, graphiql: true
 }))
 
-app.listen(process.env.PORT || 5000, () => console.log('Listening on 4000'))
+app.use('/',serveStatic(path.join(__dirname,'../dist')))
+
+app.listen(process.env.PORT || 5000, () => console.log(`Listening on ${process.env.PORT}`))
